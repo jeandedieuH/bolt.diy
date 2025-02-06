@@ -6,7 +6,7 @@ WORKDIR /app
 # Install dependencies (this step is cached as long as the dependencies don't change)
 COPY package.json npm-lock.yaml ./
 
-RUN corepack enable npm && npm install
+RUN npm install -g corepack && npm install && corepack enable npm
 
 # Copy the rest of your app's source code
 COPY . .
