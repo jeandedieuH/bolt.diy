@@ -1,0 +1,32 @@
+name: Setup and Build
+description: Generic setup action
+inputs:
+  npm-version:
+    required: false
+    type: string
+    default: '9.4.0'
+  node-version:
+    required: false
+    type: string
+    default: '20.15.1'
+
+runs:
+  using: composite
+
+  steps:
+    - uses: npm/action-setup@v4
+      with:
+        version: ${{ inputs.npm-version }}
+        run_install: false
+
+    - name: Set Node.js version to ${{ inputs.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: npm
+
+    - name: Install dependencies and build project
+      shell: bash
+      run: |
+        npm install
+        npm run build
